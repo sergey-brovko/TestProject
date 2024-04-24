@@ -1,28 +1,25 @@
-def find_sub_qty(string, sub):
-    count = 0
-    for x in range(len(string) - len(sub) +1):
-        if string[x:x + len(sub)] == sub:
-            count += 1
-    return count
+from itertools import groupby
 
-def minion_game(string):
-    string = string.strip()
-    Vowels = 'AEIOU'
-    stuart = set()
-    kevin = set()
-    for i in range(len(string)):
-        for j in range(len(string)-i):
-            sub_string = string[j:j+i+1]
-            if string[j] not in Vowels:
-                stuart.add(sub_string)
-            else:
-                kevin.add(sub_string)
-    score_stuart = sum([ find_sub_qty(string, sub) for sub in stuart])
-    score_kevin = sum([ find_sub_qty(string, sub) for sub in kevin])
-    if score_stuart > score_kevin:
-        print (f"Stuart {score_stuart}")
-    if score_stuart < score_kevin:
-        print (f"Kevin {score_kevin}")
-    if score_stuart == score_kevin:
-        print ('Draw')
+
+def minion_game(s):
+    vowels = ['A', 'E', 'I', 'O', 'U']
+    a = 0
+    b = 0
+    for i, c in enumerate(s):
+        if c in vowels:
+            print(c)
+            b += len(s) - i
+        else:
+            print('-'+c)
+            a += len(s) - i
+            
+    if a == b:
+        print ("Draw")
+    elif a > b:
+        print ('Stuart {}'.format(a))
+    else:
+        print ('Kevin {}'.format(b))
+     
 minion_game('BANANA')
+# print(sorted('HACK'))
+# print([(len(list(k)), i) for i, k in groupby('1222311')])
